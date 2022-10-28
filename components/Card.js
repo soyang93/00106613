@@ -67,8 +67,8 @@ function Card({ nome, rede, intro, endereco, celular, isDetail, id }) {
           </div>
         </div>
       )}
-      <div className="w-full mb-4 mt-4">
-        <div className="mx-4">
+      <div className="w-full sm:mb-4 sm:mt-4">
+        <div className="hidden sm:flex mx-4">
           <Button
             isDetail={isDetail}
             onClick={detailButton}
