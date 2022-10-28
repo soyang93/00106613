@@ -2,12 +2,12 @@
 import React from "react";
 import { Button } from "../components";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/solid";
 
 import { useRecoilState } from "recoil";
 
 import { modalState } from "../atoms/modalAtom";
-import Image from "next/image";
 
 function Card({ nome, rede, intro, endereco, celular, isDetail, id }) {
   const router = useRouter();
@@ -34,6 +34,7 @@ function Card({ nome, rede, intro, endereco, celular, isDetail, id }) {
         alt="..."
         className="w-full h-[137px] rounded-l-md rounded-r-md"
       />
+
       <div className="-mt-14 rounded-lg flex items-center">
         <Image src="/person1.png" alt="..." width={112} height={112} />
       </div>

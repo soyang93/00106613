@@ -78,12 +78,12 @@ function Modal({ pix, banco, agencia, conta }) {
                       Transferência PIX
                     </h1>
                     {teste && (
-                      <div className="hidden sm:flex">
+                      <div className="hidden sm:flex flex-col mt-2 mb-2 text-center text-white">
                         <Image
-                          src="/qrcode.svg"
+                          src="/qr.jpeg"
                           alt="..."
-                          width={160}
-                          height={165}
+                          width={150}
+                          height={150}
                           className="rounded-l-md rounded-r-md"
                         />
                       </div>

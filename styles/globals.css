@@ -26,6 +26,10 @@
       url("/banner-mobile.png");
     height: fit-content;
   }
+  .card-header {
+    width: 100%;
+    height: 137px;
+  }
 }
 
 @font-face {

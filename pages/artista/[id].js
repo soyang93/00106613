@@ -5,6 +5,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 import data from "../../data.json";
+import { motion } from "framer-motion";
 
 export default function DetailPage({ user }) {
   const {
