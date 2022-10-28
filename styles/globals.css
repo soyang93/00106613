@@ -1,26 +1,34 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@layer components {
+  .banner-web {
+    background-repeat: no-repeat;
 
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+    background-image: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(83, 83, 83, 0.776536) 50%,
+        #212121 100%
+      ),
+      url("/banner.png");
+    height: fit-content;
   }
-  body {
-    color: white;
-    background: black;
+  .banner-mobile {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(83, 83, 83, 0.776536) 50%,
+        #212121 100%
+      ),
+      url("/banner-mobile.png");
+    height: fit-content;
   }
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/poppins.ttf");
 }
