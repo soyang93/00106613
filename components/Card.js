@@ -68,7 +68,7 @@ function Card({ nome, rede, intro, endereco, celular, isDetail, id }) {
         </div>
       )}
       <div className={`w-full ${isDetail ? "mb-1" : "mb-4"} sm:mb-4 sm:mt-4`}>
-        <div className={`${isDetail ? "hidden" : "flex"} mx-4`}>
+        <div className={`${isDetail ? "hidden" : "flex"} sm:flex mx-4`}>
           <Button
             isDetail={isDetail}
             onClick={detailButton}
