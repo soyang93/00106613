@@ -35,8 +35,14 @@ function Card({ nome, rede, intro, endereco, celular, isDetail, id }) {
         className="w-full h-[137px] rounded-l-md rounded-r-md"
       />
 
-      <div className="-mt-14 rounded-lg flex items-center">
-        <Image src="/person1.png" alt="..." width={112} height={112} />
+      <div className="-mt-14 rounded-2xl flex items-center bg-[#212121] p-[5.5px]">
+        <Image
+          src="/caio.png"
+          alt="..."
+          width={110}
+          height={110}
+          className="rounded-xl"
+        />
       </div>
       <div className="flex flex-col items-center">
         {/* nome */}

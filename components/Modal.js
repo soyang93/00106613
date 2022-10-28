@@ -6,6 +6,7 @@ import {
   ClipboardDocumentCheckIcon,
   XMarkIcon,
   ExclamationTriangleIcon,
+  UserIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "../components";
 import Image from "next/image";
@@ -90,17 +91,28 @@ function Modal({ pix, banco, agencia, conta }) {
                     )}
 
                     <div className="flex flex-row w-full mt-1 sm:mt-1">
-                      <div className="mx-4 w-full bg-[#484848] rounded-md">
-                        <div className="mx-2 flex flex-row items-center justify-between py-2">
-                          <span className="text-white text-[15px] ">{pix}</span>
+                      <div className="flex flex-col w-full mx-1">
+                        <div className="flex flex-row items-center justify-between py-2 bg-[#484848] w-full rounded-md">
+                          <span className="text-white text-[15px] ml-3">
+                            {pix}
+                          </span>
 
-                          <div className="flex flex-row cursor-pointer h-full">
+                          <div className="flex flex-row cursor-pointer h-full mr-3 items-center">
                             <button className="sm:hidden text-white font-poppins text-[15px] active:bg-[#585858]">
                               copiar
                             </button>
 
                             <ClipboardDocumentCheckIcon className="hidden sm:flex w-4 h-4 text-white active:bg-[#585858]" />
                           </div>
+                        </div>
+                        <div className="flex mt-2 bg-[#484848] p-2 rounded-md">
+                          <div className="flex justify-center items-center">
+                            <UserIcon className="w-5 h-5 mr-2 text-white text-center" />
+                          </div>
+
+                          <h1 className="text-white font-poppins text-[12px] items-center text-center">
+                            caio barroso de sousa
+                          </h1>
                         </div>
                       </div>
                     </div>
