@@ -4,21 +4,22 @@ import { Historico, Historia, Modal, Input, Card, Pin } from "../../components";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
-import data from "../../data.json";
-import { motion } from "framer-motion";
+import { fetchPosts } from "../../utils/fetchPosts";
 
 export default function DetailPage({ user }) {
   const {
     nome,
-    redes,
-    bio,
+    redeSocial,
+    historia,
     endereco,
     celular,
-    created_at,
-    codigo_pix,
+    _createdAt,
+    fotoPerfil,
+    titularPix,
     banco,
     agencia,
     conta,
+    qrCodePix,
   } = user;
 
   const router = useRouter();
@@ -49,10 +50,11 @@ export default function DetailPage({ user }) {
           <div className="flex flex-col">
             <Card
               nome={nome}
-              rede={redes}
-              intro={bio}
+              redeSocial={redeSocial}
+              historia={historia}
               endereco={endereco}
               celular={celular}
+              fotoPerfil={fotoPerfil}
               isDetail
             />
 
@@ -66,15 +68,16 @@ export default function DetailPage({ user }) {
 
           <div className="flex flex-col w-full">
             <Historico />
-            <Historia text={bio} createdAt={created_at} />
+            <Historia text={historia} createdAt={_createdAt} />
           </div>
         </div>
         {isOpen && (
           <Modal
-            pix={codigo_pix}
+            pix={titularPix}
             banco={banco}
             agencia={agencia}
             conta={conta}
+            qrCodePix={qrCodePix}
           />
         )}
       </main>
@@ -83,11 +86,9 @@ export default function DetailPage({ user }) {
 }
 
 export async function getStaticPaths() {
-  // const value = await fetch("http://localhost:3000/api/data").then((res) =>
-  //   res.json()
-  // );
+  const value = await fetchPosts();
 
-  const ids = data.map((item) => item.id);
+  const ids = value.map((item) => item._id);
   const paths = ids.map((id) => ({
     params: { id: id.toString() },
   }));
@@ -99,13 +100,12 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async (context) => {
-  // const value = await fetch("http://localhost:3000/api/data").then((res) =>
-  //   res.json()
-  // );
-  const user = data.find((item) => item.id == context.params.id);
+  const value = await fetchPosts();
+  const user = value.find((item) => item._id == context.params.id);
   return {
     props: {
       user,
     },
+    revalidate: 10,
   };
 };

@@ -4,14 +4,24 @@ import { Button } from "../components";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/solid";
-
+import { urlFor } from "../sanity";
 import { useRecoilState } from "recoil";
 
 import { modalState } from "../atoms/modalAtom";
 
-function Card({ nome, rede, intro, endereco, celular, isDetail, id }) {
+function Card({
+  nome,
+  redeSocial,
+  historia,
+  endereco,
+  celular,
+  isDetail,
+  id,
+  fotoPerfil,
+}) {
   const router = useRouter();
-  const text = intro.length > 125 ? `${intro.substring(0, 125)} ...` : intro;
+  const text =
+    historia.length > 125 ? `${historia.substring(0, 125)} ...` : historia;
 
   const [isOpen, setIsOpen] = useRecoilState(modalState);
 
@@ -37,7 +47,7 @@ function Card({ nome, rede, intro, endereco, celular, isDetail, id }) {
 
       <div className="-mt-14 rounded-2xl flex items-center bg-[#212121] p-[5.5px]">
         <Image
-          src="/caio.png"
+          src={urlFor(fotoPerfil).url()}
           alt="..."
           width={110}
           height={110}
@@ -51,7 +61,7 @@ function Card({ nome, rede, intro, endereco, celular, isDetail, id }) {
         </h1>
         {/* rede social */}
         <p className="text-[14px] text-[#A6A6A6] leading-[21px] font-normal mt-2">
-          {rede}
+          {redeSocial}
         </p>
         {/* bio */}
       </div>

@@ -1,7 +1,14 @@
 import React from "react";
 
 function Pin({ isHistorico }) {
-  const info = ["Pescaria", "Skate", "Artista de rua"];
+  const info = [
+    "Pescaria",
+    "Skate",
+    "Artista de rua",
+    "Surf",
+    "Grafite",
+    "Dança",
+  ];
   const donations = ["512 doações", "410 compartilhamentos"];
 
   const data = isHistorico ? donations : info;

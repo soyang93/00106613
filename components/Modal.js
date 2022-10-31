@@ -9,11 +9,14 @@ import {
   UserIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "../components";
+import { urlFor } from "../sanity";
 import Image from "next/image";
 
-function Modal({ pix, banco, agencia, conta }) {
+function Modal({ pix, banco, agencia, conta, qrCodePix }) {
   const [isOpen, setIsOpen] = useRecoilState(modalState);
-  const teste = true;
+  const temQrcode = true;
+  const temConta = true;
+  const temPix = true;
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -60,7 +63,7 @@ function Modal({ pix, banco, agencia, conta }) {
                   {/* atention box */}
                   <div className="mx-4 my-2">
                     <div className="flex flex-row items-center">
-                      <ExclamationTriangleIcon className="w-5 h-5 text-white" />
+                      <ExclamationTriangleIcon className="w-5 h-5 text-amber-200" />
                       <h1 className="text-white text-[18px] font-poppins ml-2">
                         Atenção
                       </h1>
@@ -73,67 +76,85 @@ function Modal({ pix, banco, agencia, conta }) {
                   </div>
                 </div>
                 {/* transferencia pix */}
+
                 <div className="flex flex-col sm:flex-row">
-                  <div className="flex flex-col bg-[#3C3C3C] w-full sm:w-[80%] mt-2 sm:mt-6 rounded-md justify-center items-center py-4 mr-4 h-min">
-                    <h1 className="text-white font-poppins text-[18px]">
-                      Transferência PIX
-                    </h1>
-                    {teste && (
-                      <div className="hidden sm:flex flex-col mt-2 mb-2 text-center text-white">
-                        <Image
-                          src="/qr.jpeg"
-                          alt="..."
-                          width={150}
-                          height={150}
-                          className="rounded-l-md rounded-r-md"
-                        />
-                      </div>
-                    )}
-
-                    <div className="flex flex-row w-full mt-1 sm:mt-1">
-                      <div className="flex flex-col w-full mx-1">
-                        <div className="flex flex-row items-center justify-between py-2 bg-[#484848] w-full rounded-md">
-                          <span className="text-white text-[15px] ml-3">
-                            {pix}
-                          </span>
-
-                          <div className="flex flex-row cursor-pointer h-full mr-3 items-center">
-                            <button className="sm:hidden text-white font-poppins text-[15px] active:bg-[#585858]">
-                              copiar
-                            </button>
-
-                            <ClipboardDocumentCheckIcon className="hidden sm:flex w-4 h-4 text-white active:bg-[#585858]" />
-                          </div>
-                        </div>
-                        <div className="flex mt-2 bg-[#484848] p-2 rounded-md">
-                          <div className="flex justify-center items-center">
-                            <UserIcon className="w-5 h-5 mr-2 text-white text-center" />
-                          </div>
-
-                          <h1 className="text-white font-poppins text-[12px] items-center text-center">
-                            caio barroso de sousa
-                          </h1>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* transferencia TED */}
-                  <div className="flex flex-col bg-[#3C3C3C] w-full mt-2 sm:mt-6 rounded-md items-center px-4 py-4 h-min">
-                    <h1 className="text-white font-poppins text-[18px] mb-1 sm:mb-4">
-                      Transferência TED/DOC
-                    </h1>
-                    <div className="flex flex-col bg-[#484848] p-3 rounded-md w-full">
+                  {temPix && (
+                    <div
+                      className={`flex flex-col bg-[#3C3C3C] w-full ${
+                        temConta ? "sm:w-[80%]" : "sm:w-full"
+                      } mt-2 sm:mt-6 rounded-md justify-center items-center py-4 ${
+                        temConta ? "mr-4" : "mr-0"
+                      } h-min`}
+                    >
                       <h1 className="text-white font-poppins text-[18px]">
-                        Banco: {banco}
+                        Transferência PIX
                       </h1>
-                      <h1 className="text-white font-poppins text-[18px] mt-1">
-                        Agência: {agencia}
-                      </h1>
-                      <h1 className="text-white font-poppins text-[18px] mt-1 ">
-                        Conta: {conta}
-                      </h1>
+                      {temQrcode && (
+                        <div
+                          className={`${
+                            !temConta ? "flex" : "hidden"
+                          } sm:flex flex-col mt-2 mb-2 text-center text-white`}
+                        >
+                          <Image
+                            src={urlFor(qrCodePix).url()}
+                            alt="..."
+                            width={150}
+                            height={150}
+                            className="rounded-l-md rounded-r-md"
+                          />
+                        </div>
+                      )}
+
+                      <div className="flex flex-row w-full mt-1 sm:mt-1">
+                        <div className="flex flex-col w-full mx-2">
+                          <div className="flex flex-row items-center justify-between py-2 bg-[#484848] w-full rounded-md">
+                            <span className="text-white text-[15px] ml-2 flex bg-[#585858] w-full mr-2 rounded-md p-2">
+                              {pix}
+                            </span>
+
+                            <div className="flex flex-row cursor-pointer h-full mr-2 items-center">
+                              <button className="sm:hidden text-white font-poppins text-[15px] active:bg-[#585858]">
+                                copiar
+                              </button>
+
+                              <ClipboardDocumentCheckIcon className="hidden sm:flex w-4 h-4 text-white active:bg-[#585858]" />
+                            </div>
+                          </div>
+                          <div className="flex mt-2 bg-[#484848] p-2 rounded-md">
+                            <div className="flex justify-center items-center">
+                              <h1 className="text-white font-poppins text-[15px] mr-2">
+                                Titular
+                              </h1>
+                            </div>
+
+                            <h1 className="text-white font-poppins text-[12px] items-center text-start p-2 w-full flex rounded-md bg-[#585858]">
+                              caio barroso de sousa
+                            </h1>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
+
+                  {/* transferencia TED */}
+                  {temConta && (
+                    <div className="flex flex-col bg-[#3C3C3C] w-full mt-2 sm:mt-6 rounded-md items-center px-4 py-4 h-min">
+                      <h1 className="text-white font-poppins text-[18px] mb-1 sm:mb-4">
+                        Transferência TED/DOC
+                      </h1>
+                      <div className="flex flex-col bg-[#484848] p-3 rounded-md w-full">
+                        <h1 className="text-white font-poppins text-[18px]">
+                          Banco: {banco}
+                        </h1>
+                        <h1 className="text-white font-poppins text-[18px] mt-1">
+                          Agência: {agencia}
+                        </h1>
+                        <h1 className="text-white font-poppins text-[18px] mt-1 ">
+                          Conta: {conta}
+                        </h1>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-row mt-2 sm:mt-8">
                   <Button

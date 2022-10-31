@@ -12,6 +12,8 @@
 /.next/
 /out/
 
+pocodadraga/node_modules
+
 # production
 /build
 

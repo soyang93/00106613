@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Card, Pin, Header } from "../components";
-import data from "../data.json";
+import { fetchPosts } from "../utils/fetchPosts";
 
 export default function Home({ user }) {
   return (
@@ -26,16 +26,16 @@ export default function Home({ user }) {
               comunidade.
             </p>
           </div>
-
+          {console.log(user)}
           <div className="flex flex-wrap mt-10 justify-between">
-            {data.map((item, index) => (
+            {user.map((item, index) => (
               <Card
                 key={item.id}
-                index={index}
                 nome={item.nome}
-                rede={item.redes}
-                intro={item.bio}
-                id={item.id}
+                redeSocial={item.redeSocial}
+                historia={item.historia}
+                fotoPerfil={item.fotoPerfil}
+                id={item._id}
               />
             ))}
           </div>
@@ -45,9 +45,7 @@ export default function Home({ user }) {
   );
 }
 
-// export async function getStaticProps() {
-//   const user = await fetch("http://localhost:3000/api/data").then((res) =>
-//     res.json()
-//   );
-//   return { props: { user } };
-// }
+export async function getStaticProps() {
+  const user = await fetchPosts();
+  return { props: { user } };
+}
