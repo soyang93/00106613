@@ -1,8 +1,9 @@
 import Head from "next/head";
 import { Card, Pin, Header } from "../components";
 import { fetchPosts } from "../utils/fetchPosts";
+import { fetchPins } from "../utils/fetchPins";
 
-export default function Home({ user }) {
+export default function Home({ user, pins }) {
   return (
     <div className="bg-black">
       <Head>
@@ -15,22 +16,22 @@ export default function Home({ user }) {
             <h1 className="text-white text-[22px] font-medium font-poppins mb-2">
               Comunidades
             </h1>
-            <Pin />
+            <Pin pins={pins} />
           </div>
           <div className="mt-4 sm:mt-12">
             <h1 className="text-white text-[22px] leading-[33px] font-medium font-poppins">
               História dos moradores
             </h1>
-            <p className="text-white text-[16px] leading-[24px] mt-3">
+            <p className="text-white text-[16px] leading-[24px] mt-2">
               Aqui estão reunidas várias histórias sobre pessoas que vivem na
               comunidade.
             </p>
           </div>
-          {console.log(user)}
+
           <div className="flex flex-wrap mt-10 justify-between">
-            {user.map((item, index) => (
+            {user.map((item) => (
               <Card
-                key={item.id}
+                key={item._id}
                 nome={item.nome}
                 redeSocial={item.redeSocial}
                 historia={item.historia}
@@ -47,5 +48,6 @@ export default function Home({ user }) {
 
 export async function getStaticProps() {
   const user = await fetchPosts();
-  return { props: { user } };
+  const pins = await fetchPins();
+  return { props: { user, pins }, revalidate: 10 };
 }

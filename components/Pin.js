@@ -1,17 +1,10 @@
 import React from "react";
+import { fetchPins } from "../utils/fetchPins";
 
-function Pin({ isHistorico }) {
-  const info = [
-    "Pescaria",
-    "Skate",
-    "Artista de rua",
-    "Surf",
-    "Grafite",
-    "Dança",
-  ];
+export default function Pin({ isHistorico, pins }) {
   const donations = ["512 doações", "410 compartilhamentos"];
 
-  const data = isHistorico ? donations : info;
+  const data = isHistorico ? donations : pins;
   return (
     <div
       className={`flex flex-wrap ${
@@ -33,5 +26,3 @@ function Pin({ isHistorico }) {
     </div>
   );
 }
-
-export default Pin;

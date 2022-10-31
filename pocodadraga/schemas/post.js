@@ -7,6 +7,7 @@ export default {
       name: "nome",
       title: "Nome",
       type: "string",
+      validation: (Rule) => Rule.required().error("Campo obrigatório."),
     },
     {
       name: "fotoPerfil",
@@ -15,6 +16,7 @@ export default {
       options: {
         hotspot: true,
       },
+      validation: (Rule) => Rule.required().error("Campo obrigatório."),
     },
     {
       name: "celular",
@@ -68,6 +70,7 @@ export default {
       name: "historia",
       title: "Historia",
       type: "string",
+      validation: (Rule) => Rule.required().error("Campo obrigatório."),
     },
   ],
 };

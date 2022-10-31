@@ -12,11 +12,11 @@ import { Button } from "../components";
 import { urlFor } from "../sanity";
 import Image from "next/image";
 
-function Modal({ pix, banco, agencia, conta, qrCodePix }) {
+function Modal({ pix, banco, agencia, conta, qrCodePix, titularPix }) {
   const [isOpen, setIsOpen] = useRecoilState(modalState);
-  const temQrcode = true;
+
   const temConta = true;
-  const temPix = true;
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -76,97 +76,104 @@ function Modal({ pix, banco, agencia, conta, qrCodePix }) {
                   </div>
                 </div>
                 {/* transferencia pix */}
-
-                <div className="flex flex-col sm:flex-row">
-                  {temPix && (
-                    <div
-                      className={`flex flex-col bg-[#3C3C3C] w-full ${
-                        temConta ? "sm:w-[80%]" : "sm:w-full"
-                      } mt-2 sm:mt-6 rounded-md justify-center items-center py-4 ${
-                        temConta ? "mr-4" : "mr-0"
-                      } h-min`}
-                    >
-                      <h1 className="text-white font-poppins text-[18px]">
-                        Transferência PIX
-                      </h1>
-                      {temQrcode && (
+                {!pix && !conta ? (
+                  <div className="text-white text-center my-5">
+                    <h1>Não encontramos dados bancários neste perfil..</h1>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex flex-col sm:flex-row">
+                      {pix && (
                         <div
-                          className={`${
-                            !temConta ? "flex" : "hidden"
-                          } sm:flex flex-col mt-2 mb-2 text-center text-white`}
+                          className={`flex flex-col bg-[#3C3C3C] w-full ${
+                            temConta ? "sm:w-[80%]" : "sm:w-full"
+                          } mt-2 sm:mt-6 rounded-md justify-center items-center py-4 ${
+                            temConta ? "mr-4" : "mr-0"
+                          } h-min`}
                         >
-                          <Image
-                            src={urlFor(qrCodePix).url()}
-                            alt="..."
-                            width={150}
-                            height={150}
-                            className="rounded-l-md rounded-r-md"
-                          />
+                          <h1 className="text-white font-poppins text-[18px]">
+                            Transferência PIX
+                          </h1>
+                          {qrCodePix && (
+                            <div
+                              className={`${
+                                !temConta ? "flex" : "hidden"
+                              } sm:flex flex-col mt-2 mb-2 text-center text-white`}
+                            >
+                              <Image
+                                src={urlFor(qrCodePix).url()}
+                                alt="..."
+                                width={150}
+                                height={150}
+                                className="rounded-l-md rounded-r-md"
+                              />
+                            </div>
+                          )}
+
+                          <div className="flex flex-row w-full mt-1 sm:mt-1">
+                            <div className="flex flex-col w-full mx-2">
+                              <div className="flex flex-row items-center justify-between py-2 bg-[#484848] w-full rounded-md">
+                                <span className="text-white text-[15px] ml-2 flex bg-[#585858] w-full mr-2 rounded-md p-2">
+                                  {pix}
+                                </span>
+
+                                <div className="flex flex-row cursor-pointer h-full mr-2 items-center">
+                                  <button className="sm:hidden text-white font-poppins text-[15px] active:bg-[#585858]">
+                                    copiar
+                                  </button>
+
+                                  <ClipboardDocumentCheckIcon className="hidden sm:flex w-4 h-4 text-white active:bg-[#585858]" />
+                                </div>
+                              </div>
+                              <div className="flex mt-2 bg-[#484848] p-2 rounded-md">
+                                <div className="flex justify-center items-center">
+                                  <h1 className="text-white font-poppins text-[12px] mr-2">
+                                    Titular
+                                  </h1>
+                                </div>
+
+                                <h1 className="text-white font-poppins text-[12px] items-center text-start p-2 w-full flex rounded-md bg-[#585858]">
+                                  {titularPix}
+                                </h1>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       )}
 
-                      <div className="flex flex-row w-full mt-1 sm:mt-1">
-                        <div className="flex flex-col w-full mx-2">
-                          <div className="flex flex-row items-center justify-between py-2 bg-[#484848] w-full rounded-md">
-                            <span className="text-white text-[15px] ml-2 flex bg-[#585858] w-full mr-2 rounded-md p-2">
-                              {pix}
-                            </span>
-
-                            <div className="flex flex-row cursor-pointer h-full mr-2 items-center">
-                              <button className="sm:hidden text-white font-poppins text-[15px] active:bg-[#585858]">
-                                copiar
-                              </button>
-
-                              <ClipboardDocumentCheckIcon className="hidden sm:flex w-4 h-4 text-white active:bg-[#585858]" />
-                            </div>
-                          </div>
-                          <div className="flex mt-2 bg-[#484848] p-2 rounded-md">
-                            <div className="flex justify-center items-center">
-                              <h1 className="text-white font-poppins text-[15px] mr-2">
-                                Titular
-                              </h1>
-                            </div>
-
-                            <h1 className="text-white font-poppins text-[12px] items-center text-start p-2 w-full flex rounded-md bg-[#585858]">
-                              caio barroso de sousa
+                      {/* transferencia TED */}
+                      {conta && agencia && banco && (
+                        <div className="flex flex-col bg-[#3C3C3C] w-full mt-2 sm:mt-6 rounded-md items-center px-4 py-4 h-min">
+                          <h1 className="text-white font-poppins text-[18px] mb-1 sm:mb-4">
+                            Transferência TED/DOC
+                          </h1>
+                          <div className="flex flex-col bg-[#484848] p-3 rounded-md w-full">
+                            <h1 className="text-white font-poppins text-[18px]">
+                              Banco: {banco}
+                            </h1>
+                            <h1 className="text-white font-poppins text-[18px] mt-1">
+                              Agência: {agencia}
+                            </h1>
+                            <h1 className="text-white font-poppins text-[18px] mt-1 ">
+                              Conta: {conta}
                             </h1>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
-                  )}
-
-                  {/* transferencia TED */}
-                  {temConta && (
-                    <div className="flex flex-col bg-[#3C3C3C] w-full mt-2 sm:mt-6 rounded-md items-center px-4 py-4 h-min">
-                      <h1 className="text-white font-poppins text-[18px] mb-1 sm:mb-4">
-                        Transferência TED/DOC
-                      </h1>
-                      <div className="flex flex-col bg-[#484848] p-3 rounded-md w-full">
-                        <h1 className="text-white font-poppins text-[18px]">
-                          Banco: {banco}
-                        </h1>
-                        <h1 className="text-white font-poppins text-[18px] mt-1">
-                          Agência: {agencia}
-                        </h1>
-                        <h1 className="text-white font-poppins text-[18px] mt-1 ">
-                          Conta: {conta}
-                        </h1>
-                      </div>
+                    <div className="flex flex-row mt-2 sm:mt-8">
+                      <Button
+                        text="Cancelar"
+                        style="bg-[#282828] border-[1px] rounded-md border-white w-[70%] mr-4 text-base"
+                        onClick={() => setIsOpen(false)}
+                      />
+                      <Button
+                        text="Confirmar transferência"
+                        style="text-base hover:bg-[#585858]"
+                      />
                     </div>
-                  )}
-                </div>
-                <div className="flex flex-row mt-2 sm:mt-8">
-                  <Button
-                    text="Cancelar"
-                    style="bg-[#282828] border-[1px] rounded-md border-white w-[70%] mr-4 text-base"
-                    onClick={() => setIsOpen(false)}
-                  />
-                  <Button
-                    text="Confirmar transferência"
-                    style="text-base hover:bg-[#585858]"
-                  />
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </Transition.Child>

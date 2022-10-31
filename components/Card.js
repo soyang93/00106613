@@ -60,9 +60,12 @@ function Card({
           {nome}
         </h1>
         {/* rede social */}
-        <p className="text-[14px] text-[#A6A6A6] leading-[21px] font-normal mt-2">
-          {redeSocial}
-        </p>
+        {redeSocial && (
+          <p className="text-[14px] text-[#A6A6A6] leading-[21px] font-normal mt-2">
+            {redeSocial}
+          </p>
+        )}
+
         {/* bio */}
       </div>
       {!isDetail && (
@@ -73,15 +76,18 @@ function Card({
 
       {isDetail && (
         <div className="mb-8 mt-4">
-          <div className="flex flex-row items-center mb-3">
-            <MapPinIcon className="w-4 h-4 text-white" />
-            <p className="text-white ml-2 text-[16px] ">{endereco}</p>
-          </div>
-
-          <div className="flex flex-row items-center">
-            <PhoneIcon className="w-4 h-4 text-white" />
-            <p className="text-white ml-2 text-[16px]">{celular}</p>
-          </div>
+          {endereco && (
+            <div className="flex flex-row items-center mb-3">
+              <MapPinIcon className="w-4 h-4 text-white" />
+              <p className="text-white ml-2 text-[16px] ">{endereco}</p>
+            </div>
+          )}
+          {celular && (
+            <div className="flex flex-row items-center">
+              <PhoneIcon className="w-4 h-4 text-white" />
+              <p className="text-white ml-2 text-[16px]">{celular}</p>
+            </div>
+          )}
         </div>
       )}
       <div className={`w-full ${isDetail ? "mb-1" : "mb-4"} sm:mb-4 sm:mt-4`}>

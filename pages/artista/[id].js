@@ -5,8 +5,9 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 import { fetchPosts } from "../../utils/fetchPosts";
+import { fetchPins } from "../../utils/fetchPins";
 
-export default function DetailPage({ user }) {
+export default function DetailPage({ user, pins }) {
   const {
     nome,
     redeSocial,
@@ -20,10 +21,12 @@ export default function DetailPage({ user }) {
     agencia,
     conta,
     qrCodePix,
+    chavePix,
   } = user;
 
   const router = useRouter();
   const [isOpen, setIsOpen] = useRecoilState(modalState);
+  const date = new Date(_createdAt).toLocaleDateString();
 
   return (
     <div className="bg-black">
@@ -62,22 +65,23 @@ export default function DetailPage({ user }) {
               <h1 className="text-white text-[22px] font-medium font-poppins mb-2">
                 Comunidades
               </h1>
-              <Pin />
+              <Pin pins={pins} />
             </div>
           </div>
 
           <div className="flex flex-col w-full">
             <Historico />
-            <Historia text={historia} createdAt={_createdAt} />
+            <Historia text={historia} createdAt={date} />
           </div>
         </div>
         {isOpen && (
           <Modal
-            pix={titularPix}
+            pix={chavePix}
             banco={banco}
             agencia={agencia}
             conta={conta}
             qrCodePix={qrCodePix}
+            titularPix={titularPix}
           />
         )}
       </main>
@@ -101,10 +105,12 @@ export async function getStaticPaths() {
 
 export const getStaticProps = async (context) => {
   const value = await fetchPosts();
+  const pins = await fetchPins();
   const user = value.find((item) => item._id == context.params.id);
   return {
     props: {
       user,
+      pins,
     },
     revalidate: 10,
   };
