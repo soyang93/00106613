@@ -11,5 +11,3 @@ export default {
     },
   ],
 };
-
-//nome - foto - celular - rede social - endereço - chave pix - titular pix - qr code pix - (agencia, banco, conta)
