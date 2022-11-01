@@ -1,6 +1,7 @@
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import { Dialog, Transition } from "@headlessui/react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Fragment } from "react";
 import {
   ClipboardDocumentCheckIcon,
@@ -14,8 +15,7 @@ import Image from "next/image";
 
 function Modal({ pix, banco, agencia, conta, qrCodePix, titularPix }) {
   const [isOpen, setIsOpen] = useRecoilState(modalState);
-
-  const temConta = true;
+  const copyToClipboard = (text) => navigator.clipboard.writeText(text);
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -86,9 +86,9 @@ function Modal({ pix, banco, agencia, conta, qrCodePix, titularPix }) {
                       {pix && (
                         <div
                           className={`flex flex-col bg-[#3C3C3C] w-full ${
-                            temConta ? "sm:w-[80%]" : "sm:w-full"
+                            conta ? "sm:w-[80%]" : "sm:w-full"
                           } mt-2 sm:mt-6 rounded-md justify-center items-center py-4 ${
-                            temConta ? "mr-4" : "mr-0"
+                            conta ? "mr-4" : "mr-0"
                           } h-min`}
                         >
                           <h1 className="text-white font-poppins text-[18px]">
@@ -97,7 +97,7 @@ function Modal({ pix, banco, agencia, conta, qrCodePix, titularPix }) {
                           {qrCodePix && (
                             <div
                               className={`${
-                                !temConta ? "flex" : "hidden"
+                                !conta ? "flex" : "hidden"
                               } sm:flex flex-col mt-2 mb-2 text-center text-white`}
                             >
                               <Image
@@ -118,11 +118,17 @@ function Modal({ pix, banco, agencia, conta, qrCodePix, titularPix }) {
                                 </span>
 
                                 <div className="flex flex-row cursor-pointer h-full mr-2 items-center">
-                                  <button className="sm:hidden text-white font-poppins text-[15px] active:bg-[#585858]">
+                                  <button
+                                    className="sm:hidden text-white font-poppins text-[15px] active:bg-[#585858]"
+                                    onClick={() => copyToClipboard(pix)}
+                                  >
                                     copiar
                                   </button>
 
-                                  <ClipboardDocumentCheckIcon className="hidden sm:flex w-4 h-4 text-white active:bg-[#585858]" />
+                                  <ClipboardDocumentCheckIcon
+                                    className="hidden sm:flex w-4 h-4 text-white active:bg-[#585858]"
+                                    onClick={() => copyToClipboard(pix)}
+                                  />
                                 </div>
                               </div>
                               <div className="flex mt-2 bg-[#484848] p-2 rounded-md">

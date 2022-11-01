@@ -1,5 +1,4 @@
 import React from "react";
-import { fetchPins } from "../utils/fetchPins";
 
 export default function Pin({ isHistorico, pins }) {
   const donations = ["512 doações", "410 compartilhamentos"];
